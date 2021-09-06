@@ -13,10 +13,11 @@ namespace AysncBreakfast
             Coffee cup = PourCoffee();
             Console.WriteLine("coffee is ready");
 
-            Egg eggs = FryEggs(2);
+            Egg eggs = await FryEggsAsync(2);
             Console.WriteLine("eggs are ready");
 
-            Bacon bacon = FryBacon(3);
+            Bacon bacon = await FryBaconAsync(3);
+
             Console.WriteLine("bacon is ready");
 
             Toast toast = await ToastBreadAsync(2);
@@ -97,6 +98,32 @@ namespace AysncBreakfast
             await Task.Delay(3000);
             Console.WriteLine("Remove toast from toaster");
             return new Toast();
+        }
+
+        private static async Task<Egg> FryEggsAsync(int howMany)
+        {
+            Console.WriteLine("Warming the egg pan...");
+            await Task.Delay(3000);
+            Console.WriteLine($"cracking {howMany} eggs");
+            Console.WriteLine("cooking the eggs ...");
+            await Task.Delay(3000);
+            Console.WriteLine("Put eggs on plate");
+            return new Egg();
+        }
+
+        private static async Task<Bacon> FryBaconAsync(int slices)
+        {
+            Console.WriteLine($"putting {slices} slices of bacon in the pan");
+            Console.WriteLine("cooking first side of bacon...");
+            await Task.Delay(3000);
+            for (int slice = 0; slice < slices; slice++)
+            {
+                Console.WriteLine("flipping a slice of bacon");
+            }
+            Console.WriteLine("cooking the second side of bacon...");
+            await Task.Delay(3000);
+            Console.WriteLine("Put bacon on plate");
+            return new Bacon();
         }
 
     }
