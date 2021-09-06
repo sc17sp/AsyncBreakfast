@@ -17,17 +17,14 @@ namespace AysncBreakfast
             Task<Bacon> baconTask = FryBaconAsync(3);
             Task<Toast> toastTask = MakeToastWithButterAndJamAsync(2);
 
-            Toast toast = await toastTask;
-            Console.WriteLine("toast is ready");
-            Egg eggs = await eggsTask;
-            Console.WriteLine("eggs are ready");
-            Bacon bacon = await baconTask;
-            Console.WriteLine("bacon is ready");
-
+            
             Juice oj = PourOJ();
             Console.WriteLine("oj is ready");
 
-
+            await Task.WhenAll(eggsTask, baconTask, toastTask);
+            Console.WriteLine("toast is ready");
+            Console.WriteLine("eggs are ready");
+            Console.WriteLine("bacon is ready");
             Console.WriteLine("Breakfast is ready!");
         }
 
