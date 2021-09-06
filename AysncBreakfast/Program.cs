@@ -17,14 +17,30 @@ namespace AysncBreakfast
             Task<Bacon> baconTask = FryBaconAsync(3);
             Task<Toast> toastTask = MakeToastWithButterAndJamAsync(2);
 
+            var breakfastTasks = new List<Task> { eggsTask, baconTask, toastTask };
+            while (breakfastTasks.Count > 0)
+            {
+                Task finishedTask = await Task.WhenAny(breakfastTasks);
+                if (finishedTask == eggsTask)
+                {
+
+                    Console.WriteLine("eggs are ready");
+                }
+                else if (finishedTask == baconTask)
+                {
+                    Console.WriteLine("bacon is ready");
+                }
+                else if (finishedTask == toastTask)
+                {
+                    Console.WriteLine("toast is ready");
+                }
+                breakfastTasks.Remove(finishedTask);
+            }
             
+            Console.WriteLine("toast is ready");
+
             Juice oj = PourOJ();
             Console.WriteLine("oj is ready");
-
-            await Task.WhenAll(eggsTask, baconTask, toastTask);
-            Console.WriteLine("toast is ready");
-            Console.WriteLine("eggs are ready");
-            Console.WriteLine("bacon is ready");
             Console.WriteLine("Breakfast is ready!");
         }
 
