@@ -8,7 +8,7 @@ namespace AysncBreakfast
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Coffee cup = PourCoffee();
             Console.WriteLine("coffee is ready");
@@ -19,7 +19,7 @@ namespace AysncBreakfast
             Bacon bacon = FryBacon(3);
             Console.WriteLine("bacon is ready");
 
-            Toast toast = ToastBread(2);
+            Toast toast = await ToastBreadAsync(2);
             ApplyButter(toast);
             ApplyJam(toast);
             Console.WriteLine("toast is ready");
@@ -85,6 +85,18 @@ namespace AysncBreakfast
         {
             Console.WriteLine("Pouring coffee");
             return new Coffee();
+        }
+
+        private static async Task<Toast> ToastBreadAsync(int slices)
+        {
+            for (int slice = 0; slice < slices; slice++)
+            {
+                Console.WriteLine("Putting slices in the toaster");
+            }
+            Console.WriteLine("Start toasting....");
+            await Task.Delay(3000);
+            Console.WriteLine("Remove toast from toaster");
+            return new Toast();
         }
 
     }
